@@ -2,14 +2,14 @@
 
 # Setup CMSSW
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-if [[ ! -d CMSSW_14_0_1 ]]; then cmsrel CMSSW_14_0_1; fi
-cd CMSSW_14_0_1
+if [[ ! -d CMSSW_12_4_11_patch3 ]]; then cmsrel CMSSW_12_4_11_patch3; fi
+cd CMSSW_12_4_11_patch3
 cmsenv
 cd -
 
 # Main script to produce ttt
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/cms.cern.ch/el9_amd64_gcc12/external/lhapdf/6.4.0-52852f9a177b8e8b5b72e2ae6b1327b6/lib
-export PYTHONPATH=$PYTHONPATH:/cvmfs/cms.cern.ch/el9_amd64_gcc12/external/lhapdf/6.4.0-52852f9a177b8e8b5b72e2ae6b1327b6/lib:/cvmfs/cms.cern.ch/el9_amd64_gcc12/external/lhapdf/6.4.0-52852f9a177b8e8b5b72e2ae6b1327b6/lib/python3.9/site-packages/LHAPDF-6.4.0-py3.9-linux-x86_64.egg/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/cms.cern.ch/el8_amd64_gcc10/external/lhapdf/6.4.0-68defff11ffd434c73727d03802bfb85/include
+export PYTHONPATH=$PYTHONPATH:/cvmfs/cms.cern.ch/el8_amd64_gcc10/external/lhapdf/6.4.0-68defff11ffd434c73727d03802bfb85/lib:/cvmfs/cms.cern.ch/el8_amd64_gcc10/external/lhapdf/6.4.0-68defff11ffd434c73727d03802bfb85/lib/python3.9/site-packages/LHAPDF-6.4.0-py3.9-linux-x86_64.egg/
 
 # need to specify python3.8 for CS8, while CS9 has python3.9 as default already
 PYTHON=python3
@@ -99,16 +99,18 @@ if [[ $mode == *"nlo"* ]]; then
 	shower=OFF
 	order=NLO
 	done
-	set aEWM1 1.289300e+02
+	set aEWM1 132.30648214177197 
 	set MZ 91.153509740726733
 	set MW 80.351812293789408
 	set MT 172.5
 	set ptj 10.
+	set ebeam1 6800
+	set ebeam2 6800
 	set etaj -1.
 	set pdlabel lhapdf
 	set lhaid 325300 
-	set WW 2.084650                          # don't set WW=0 unless it is hardcoded in patch
-	set WT   0.  # 1.36728                   # anyway set to zero by MG as final state particle
+	set WW 2.0904310808144846                # don't set WW=0 unless it is hardcoded in patch
+	set WT 1.311 
 	set dynamical_scale_choice -1            # -1 and 3 are the same at MG5_aMC but not in MG5_LO
 	set fixed_ren_scale False                # those two actually determine fixed vs dyn scale
 	set fixed_fac_scale False                # those two actually determine fixed vs dyn scale
@@ -131,19 +133,21 @@ elif [[ $mode == *"lo_ewk"* ]]; then
 	date
 	echo "launch ${OUTDIR}
 	done
-	set aEWM1 1.289300e+02
-	set MZ 9.118800e+01
-	set MW 8.041900e+01
-	set MT 173.3
+	set aEWM1 132.30648214177197 
+	set MZ 91.153509740726733
+	set MW 80.351812293789408
+	set MT 172.5
 	set ptj 10.
+	set ebeam1 6800
+	set ebeam2 6800
 	set ptb 0.
 	set etaj -1.
 	set etab -1.
 	set drbj 0.                              # 0.7 corresponds to default jet radius at NLO
 	set pdlabel lhapdf
 	set lhaid 325300
-	set WW   0.  # 2.084650                  # irrelevant at LO
-	set WT   0.  # 1.36728
+	set WW 2.0904310808144846                # irrelevant at LO
+	set WT 1.311 
 	set dynamical_scale_choice 3             # -1 and 3 are the same at MG5_aMC but not in MG5_LO
 	set fixed_ren_scale False                # those two actually determine fixed vs dyn scale
 	set fixed_fac_scale False                # those two actually determine fixed vs dyn scale
@@ -152,7 +156,7 @@ elif [[ $mode == *"lo_ewk"* ]]; then
 	set dsqrt_q2fact2 519.9
 	set scalefact 1.
 	set use_syst True
-    set gridpack True
+    	set gridpack True
 	set systematics_program systematics
 	set systematics_arguments ['--pdf=325300,316200,306000@0,322500@0,322700@0,322900@0,323100@0,323300@0,323500@0,323700@0,323900@0,305800,303200@0,292200@0,331300,331600,332100,332300@0,332500@0,332700@0,332900@0,333100@0,333300@0,333500@0,333700@0,14000,14066@0,14067@0,14069@0,14070@0,14100,14200@0,14300@0,27400,27500@0,27550@0,93300,61200,42780,315000@0,315200@0,262000@0,263000@0', '--start_id=1001','--mur=1,2,0.5', '--muf=1,2,0.5','--together=mur,muf', '--dyn=-1']
 	0" > ${OUTDIR}.cmd

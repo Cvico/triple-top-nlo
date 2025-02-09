@@ -1,7 +1,7 @@
 #!/bin/bash
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-if [[ ! -d CMSSW_14_0_1 ]]; then cmsrel CMSSW_14_0_1; fi
-cd CMSSW_14_0_1
+if [[ ! -d CMSSW_12_4_11_patch3 ]]; then cmsrel CMSSW_12_4_11_patch3; fi
+cd CMSSW_12_4_11_patch3
 cmsenv
 cd -
 
@@ -18,8 +18,8 @@ LHEWORKDIR=`pwd`
 cd $LHEWORKDIR/process
 
 #make sure lhapdf points to local cmssw installation area
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/cms.cern.ch/el9_amd64_gcc12/external/lhapdf/6.4.0-52852f9a177b8e8b5b72e2ae6b1327b6/lib
-LHAPDFCONFIG=`echo "/cvmfs/cms.cern.ch/el9_amd64_gcc12/external/lhapdf/6.4.0-52852f9a177b8e8b5b72e2ae6b1327b6/bin/lhapdf-config"`
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/cms.cern.ch/el8_amd64_gcc10/external/lhapdf/6.4.0-68defff11ffd434c73727d03802bfb85/include
+LHAPDFCONFIG=`echo "/cvmfs/cms.cern.ch/el8_amd64_gcc10/external/lhapdf/6.4.0-68defff11ffd434c73727d03802bfb85/include"`
 
 # workaround for el8
 echo "lhapdf_py3 = $LHAPDFCONFIG" >> ./Cards/amcatnlo_configuration.txt
